@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from .pareto_set import ParetoSet
+from pareto_dib.pareto_set import ParetoSet
 
 
 class PareoSetTests(unittest.TestCase):
