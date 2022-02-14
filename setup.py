@@ -17,7 +17,7 @@ setup(
     long_description_content_type="text/markdown",
     include_package_data=True,
     install_requires=['numpy',
-                      'scipy<=1.7',
+                      'scipy',
                       'sortedcontainers',
                       ],
     package_dir={'pareto_dib': 'pareto_dib'},
