@@ -8,7 +8,6 @@ class ParetoSet(SortedKeyList):
     def __init__(self, tol=1e-8):
         super().__init__(key=lambda x: x[0])
 
-        self.flag_loc = 0
         self.tol = tol
 
     def add(self, p):
@@ -34,21 +33,11 @@ class ParetoSet(SortedKeyList):
                 np.abs(self[idx + 1][0] - p[0]) < 1e-8:
             idx += 1
         while idx >= 0 and self[idx][1] - p[1] < 1e-8:
-            if idx <= self.flag_loc:
-                self.flag_loc -= 1
-
             self.pop(idx)
             idx -= 1
 
         super().add(p)
         return True
-
-    def next_flag(self, fid=-1):
-        """Find the leftmost point with False flag"""
-        cflag = self.flag_loc
-        self.flag_loc += 1
-
-        return cflag if cflag < len(self) else None
 
     def is_pareto(self, p):
         """Check if tuple is pareto maximal in first two indices.
