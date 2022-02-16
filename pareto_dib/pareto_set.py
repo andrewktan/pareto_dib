@@ -30,9 +30,9 @@ class ParetoSet(SortedKeyList):
         # remove dominated points on the left
         idx = self.bisect_left(p) - 1
         while idx + 1 < len(self) and \
-                np.abs(self[idx + 1][0] - p[0]) < 1e-8:
+                np.abs(self[idx + 1][0] - p[0]) < self.tol:
             idx += 1
-        while idx >= 0 and self[idx][1] - p[1] < 1e-8:
+        while idx >= 0 and self[idx][1] - p[1] < self.tol:
             self.pop(idx)
             idx -= 1
 
@@ -57,13 +57,13 @@ class ParetoSet(SortedKeyList):
         idx = self.bisect_left(p)
 
         while idx - 1 >= 0 and \
-                np.abs(self[idx - 1][0] - p[0]) < 1e-8:
+                np.abs(self[idx - 1][0] - p[0]) < self.tol:
             idx -= 1
 
         if idx == len(self):
             return True
         else:
-            return p[1] - self[idx][1] > 1e-8
+            return p[1] - self[idx][1] > self.tol
 
     def __contains__(self, p):
         p_test = (p[0] - self.tol, None)
@@ -94,7 +94,7 @@ class ParetoSet(SortedKeyList):
         return self
 
     def distance(self, p):
-        """Given a tuple, calculate the minimum Euclidean distance to pareto
+        """Given a tuple, calculate the minimum Euclidean distance to Pareto
         frontier (in first two indices).
 
         Args:
@@ -105,43 +105,27 @@ class ParetoSet(SortedKeyList):
 
         """
         point = np.array(p[0:2])
-        dom = self.dominant_array(p)
-
         # distance is zero if pareto optimal
-        if dom.shape[0] == 0:
+        if self.is_pareto(p):
             return 0.
 
-        # add corners of all adjacent pairs
-        candidates = np.zeros((dom.shape[0] + 1, 2))
-        for i in range(dom.shape[0] - 1):
-            candidates[i, :] = np.min(dom[[i, i + 1], :], axis=0)
+        # compare with next point
+        idx = self.bisect_left(p)
+        min_dist = self[idx][1] - point[1]
 
-        # add top and right bounds
-        candidates[-1, :] = (p[0], np.max(dom[:, 1]))
-        candidates[-2, :] = (np.max(dom[:, 0]), p[1])
+        while self[idx][0] - point[0] < min_dist:
+            if idx + 1 < len(self) and self[idx][1] > point[1]:
+                corner = np.array([self[idx][0], self[idx + 1][1]])
+                dist = np.sqrt(np.sum(np.square(point - corner)))
+                min_dist = np.minimum(dist, min_dist)
+            else:
+                dist = self[idx][0] - point[0]
+                min_dist = np.minimum(dist, min_dist)
+                break
 
-        return np.min(np.sqrt(np.sum(np.square(candidates - point), axis=1)))
-
-    def dominant_array(self, p):
-        """Given a tuple, return the set of dominating points in the set (in
-        the first two indices).
-
-        Args:
-            p (tuple): point
-
-        Returns:
-            numpy.ndarray: array of dominating points
-
-        """
-        idx = self.bisect_right(p)
-
-        domlist = []
-
-        while idx < len(self) and self[idx][1] > p[1]:
-            domlist.append(self[idx])
             idx += 1
 
-        return np.array([x[0:2] for x in domlist])
+        return min_dist
 
     def to_array(self):
         """Convert first two indices to numpy.ndarray
