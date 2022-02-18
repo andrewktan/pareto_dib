@@ -1,7 +1,7 @@
 # Primal Deterministic Information Bottleneck
 
 
-![test workflow](https://github.com/andrewktan/pareto_dib/actions/workflows/python-package.yml/badge.svg)
+![tests](https://github.com/andrewktan/pareto_dib/actions/workflows/ci.yml/badge.svg)
 ![license](https://img.shields.io/github/license/andrewktan/pareto_dib)
 
 ## Introduction
