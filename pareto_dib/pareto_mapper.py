@@ -2,21 +2,23 @@ from time import time
 
 import numpy as np
 
-from .classification_util import (combine_cmaps, entropy, entropy_diff,
-                                 merge_joint, mutual_information,
-                                 single_cluster_cmap, weighted_jsd)
+from .classification_utils import (combine_cmaps, entropy, entropy_diff,
+                                   merge_joint, mutual_information,
+                                   single_cluster_cmap, weighted_jsd)
 from .pareto_set import ParetoSet
 
 
 def pareto_mapper(p, epsilon=1e-12):
     """
-            Parameters:
-                    p (numpy.ndarray): joint distribution
-                    eps (float, optional): search depth, default 1e-12
+    Pareto Mapper
 
-            returns:
-                    pset (ParetoSet): DIB Pareto frontier
-                    run_stats (dict): performance statistics
+        Parameters:
+                p (numpy.ndarray): joint distribution
+                eps (float, optional): search depth, default 1e-12
+
+        Returns:
+                pset (ParetoSet): DIB Pareto frontier
+                run_stats (dict): performance statistics
     """
     n = p.shape[0]
 

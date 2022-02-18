@@ -1,7 +1,9 @@
+import matplotlib.pyplot as plt
 import numpy as np
 
-from pareto_dib import pareto_mapper
+from pareto_dib import pareto_mapper, pareto_plot
 
-p = np.loadtxt("data/pxy_test.txt")
-
-pareto, _ = pareto_mapper(p, epsilon=1e-3)
+pxy = np.load("data/pxy_01.npy")
+pset, _ = pareto_mapper(pxy, epsilon=1e-12)
+pareto_plot(pset)
+plt.show()
