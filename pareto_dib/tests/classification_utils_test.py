@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from classification_util import merge_joint_sym
+from pareto_dib.classification_utils import merge_joint_sym
 
 
 class ClassificationUtilTests(unittest.TestCase):
