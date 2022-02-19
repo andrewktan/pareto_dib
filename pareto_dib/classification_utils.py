@@ -74,6 +74,17 @@ def merge_joint(pxy, cmap):
     return ret
 
 
+def merge_joint_sym(p, cmap):
+    ret = np.zeros((len(cmap), len(cmap), p.shape[2]))
+    for cx, Sx in cmap.items():
+        for cy, Sy in cmap.items():
+            for x in Sx:
+                for y in Sy:
+                    ret[cx, cy, :] += p[x, y, :]
+
+    return ret
+
+
 def single_cluster_cmap(n, cluster):
     c = 0
     cmap = defaultdict(set)
