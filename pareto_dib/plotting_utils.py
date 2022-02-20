@@ -4,20 +4,29 @@ import numpy as np
 from pareto_dib import pareto_mapper
 
 
-def pareto_plot(pset):
+def pareto_plot(pset, scale='standard'):
     """
     Plot ParetoSet with boundary lines and convex hull.
 
         Parameters:
                 pset (ParetoSet): Pareto set
+                scale: 'standard' or 'symmetric' for ParetoMapper and
+                    SymmetricParetoMapper output respectively
     """
     fig = plt.figure()
     ax = fig.gca()
 
+    # scale
+    if scale == 'standard':
+        sval = 1
+    elif scale == 'symmetric':
+        sval = 2
+    else:
+        raise f"scale: {scale} not supported."
+
     # plot frontier
     plist = pset.to_list()
-    points = np.array([(x[0], x[1]) for x in plist])
-
+    points = np.array([(x[0] / sval, x[1]) for x in plist])
     ax.plot(points[:, 0],
             points[:, 1],
             color='k',
@@ -75,7 +84,7 @@ def pareto_plot(pset):
 
     # set axis limits
     ax.set_title("DIB Frontier")
-    ax.set_xlabel("-H(Z) [bits]")
+    ax.set_xlabel("-H(Z) / 2 [bits]" if sval == 2 else "-H(Z) [bits]")
     ax.set_ylabel("I(Z; Y) [bits]")
     ax.set_xlim(np.min(points[:, 0]), np.max(points[:, 0]))
     ax.set_ylim(0., points[:, 1].max() * 1.05)

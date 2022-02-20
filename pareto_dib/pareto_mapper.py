@@ -8,7 +8,7 @@ from .classification_utils import (combine_cmaps, entropy, entropy_diff,
 from .pareto_set import ParetoSet
 
 
-def pareto_mapper(p, epsilon=1e-12):
+def pareto_mapper(p, epsilon=1e-8):
     """
     Pareto Mapper
 

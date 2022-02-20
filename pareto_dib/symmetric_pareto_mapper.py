@@ -7,7 +7,7 @@ from .classification_utils import (combine_cmaps, entropy, merge_joint_sym,
 from .pareto_set import ParetoSet
 
 
-def symmetric_pareto_mapper(p3d, epsilon=1e-12):
+def symmetric_pareto_mapper(p3d, epsilon=1e-8):
     """
     Symmetric Pareto Mapper
 
