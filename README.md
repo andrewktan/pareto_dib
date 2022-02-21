@@ -60,21 +60,21 @@ For details on the creation of the datasets and a discussion of the frontier, pl
 ### English alphabet
 To reproduce this plot, run `python3 examples/example.py --dataset alpha27`.
 
-![English Alphabet frontier](https://github.com/andrewktan/pareto_dib/tree/main/images/alpha27.jpg)
+![English Alphabet frontier](https://github.com/andrewktan/pareto_dib/blob/main/images/alpha27.jpg)
 
 ### Colors
-To reproduce this plot, run `python3 examples/example.py --dataset colors`
+To reproduce this plot, run `python3 examples/example.py --dataset colors`.
 
-![Colors frontier](https://github.com/andrewktan/pareto_dib/tree/main/images/colors.jpg)
+![Colors frontier](https://github.com/andrewktan/pareto_dib/blob/main/images/colors.jpg)
 
 ### Group datasets
-To reproduce this plot, run `python3 examples/example.py --dataset Z40x`
+To reproduce this plot, run `python3 examples/example.py --dataset Z40x`.
 
 ![Z40x group frontier](https://github.com/andrewktan/pareto_dib/blob/main/images/Z40x.jpg)
 
-To reproduce this plot, run `python3 examples/example.py --dataset pauli`
+To reproduce this plot, run `python3 examples/example.py --dataset pauli`.
 
-![Pauli group frontier](https://github.com/andrewktan/pareto_dib/tree/main/images/pauli.jpg)
+![Pauli group frontier](https://github.com/andrewktan/pareto_dib/blob/main/images/pauli.jpg)
 
 ## Version History
 
