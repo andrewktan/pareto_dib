@@ -40,7 +40,7 @@ elif dset == 'pauli':
     pset, _ = symmetric_pareto_mapper(pxy, epsilon=1e-8)
     ax = pareto_plot(pset, scale='symmetric')
 else:
-    raise f"Dataset: '{dset}' not found."
+    raise Exception(f"Dataset: '{dset}' not found.")
 
 ax.set_title(f"DIB Frontier ({dset})")
 plt.show()

@@ -7,7 +7,7 @@ from pareto_dib.pareto_set import ParetoSet
 
 class PareoSetTests(unittest.TestCase):
     def setUp(self):
-        self.PA = ParetoSet()
+        self.PA = ParetoSet(tol=1e-8)
 
         self.PA.add((0.2, 0.1))
         self.PA.add((0., 1.))  # pareto optimal
@@ -18,7 +18,7 @@ class PareoSetTests(unittest.TestCase):
         self.PA.add((0., 0.))
 
     def test_edgecases(self):
-        P = ParetoSet()
+        P = ParetoSet(tol=1e-8)
 
         self.assertTrue(P.add((0., 1.)))
         self.assertEqual(len(P), 1)
@@ -33,18 +33,6 @@ class PareoSetTests(unittest.TestCase):
         self.assertFalse(P.add((0.5, 1.)))
         self.assertFalse(P.add((0.5, 0.9)))
         self.assertEqual(len(P), 1)
-        self.assertFalse(P.add((0.5 + 1e-14, 0.5)))
-        self.assertEqual(len(P), 1)
-        self.assertTrue(P.add((0., 2.,)))
-        self.assertEqual(len(P), 2)
-        self.assertTrue(P.add((2., 0.,)))
-        self.assertEqual(len(P), 3)
-        self.assertFalse(P.add((0.5 + 1e-14, 0.5)))
-        self.assertEqual(len(P), 3)
-        self.assertTrue(P.add((0.5 + 1e-14, 1.5)))
-        self.assertEqual(len(P), 3)
-        self.assertTrue(P.add((0.5 - 1e-14, 1.6)))
-        self.assertEqual(len(P), 3)
 
     def test_ispareto(self):
         self.assertTrue(self.PA.is_pareto((0., 1.)))
@@ -54,16 +42,6 @@ class PareoSetTests(unittest.TestCase):
         self.assertTrue(self.PA.is_pareto((1., 0.)))
 
         self.assertTrue(self.PA.is_pareto((0.125, 0.95)))
-
-        self.assertTrue(self.PA.is_pareto((0.5 + 1e-10, 0.5 + 1e-10)))
-        self.assertTrue(self.PA.is_pareto((0.5 + 1e-10, 0.5 - 1e-10)))
-        self.assertTrue(self.PA.is_pareto((0.5 - 1e-10, 0.5 + 1e-10)))
-        self.assertTrue(self.PA.is_pareto((0.5 - 1e-10, 0.5 - 1e-10)))
-
-        self.assertTrue(self.PA.is_pareto((0.5 + 1e-6, 0.5 + 1e-6)))
-        self.assertTrue(self.PA.is_pareto((0.5 + 1e-6, 0.5 - 1e-6)))
-        self.assertTrue(self.PA.is_pareto((0.5 - 1e-6, 0.5 + 1e-6)))
-        self.assertFalse(self.PA.is_pareto((0.5 - 1e-6, 0.5 - 1e-6)))
 
     def test_length(self):
         self.assertEqual(len(self.PA), 5)
@@ -78,6 +56,7 @@ class PareoSetTests(unittest.TestCase):
         self.assertAlmostEqual(self.PA.distance((0.9, -1)), 0.1)
         self.assertAlmostEqual(self.PA.distance((-1, 0)), 1.)
         self.assertAlmostEqual(self.PA.distance((0.25, 0.5)), 0.)
+        self.assertAlmostEqual(self.PA.distance((1., -0.5)), 0.)
         self.assertAlmostEqual(
             self.PA.distance(
                 (0.2, 0.45)), 0.05 * np.sqrt(2))

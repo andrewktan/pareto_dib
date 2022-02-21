@@ -5,8 +5,11 @@ from sortedcontainers import SortedKeyList
 class ParetoSet(SortedKeyList):
     """Maintained maximal set with efficient insertion."""
 
+    def __new__(cls, *args, **kwargs):
+        return super().__new__(cls, key=lambda x: x[0])
+
     def __init__(self, tol=1e-8):
-        super().__init__(key=lambda x: x[0])
+        super().__init__()
 
         self.tol = tol
 
@@ -55,10 +58,6 @@ class ParetoSet(SortedKeyList):
 
         # check right for dominating points
         idx = self.bisect_left(p)
-
-        while idx - 1 >= 0 and \
-                np.abs(self[idx - 1][0] - p[0]) < self.tol:
-            idx -= 1
 
         if idx == len(self):
             return True
