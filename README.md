@@ -58,16 +58,23 @@ The datasets presented in "Pareto-optimal clustering with the primal determinist
 For details on the creation of the datasets and a discussion of the frontier, please refer to the paper.
 
 ### English alphabet
+Here the X is the character immediately preceeding Y with the distribution derived from a large body of English text.
 To reproduce this plot, run `python3 examples/example.py --dataset alpha27`.
 
 ![English Alphabet frontier](https://github.com/andrewktan/pareto_dib/blob/main/images/alpha27.jpg)
 
 ### Colors
+Here X contains information about an object's color and Y is the object's class.
 To reproduce this plot, run `python3 examples/example.py --dataset colors`.
 
 ![Colors frontier](https://github.com/andrewktan/pareto_dib/blob/main/images/colors.jpg)
 
 ### Group datasets
+The group examples showcase the Symmetric Pareto Mapper. 
+The random variables X_1 and X_2 are drawn uniformly from a group and Z = X_1 * X_2, where * denotes the group operation.
+Examples for the multiplicative group modulo 40 (Z40x) and the Pauli group are presented below.
+Both datasets result in the same DIB frontier despite being derived from qualitatively very different groups.
+
 To reproduce this plot, run `python3 examples/example.py --dataset Z40x`.
 
 ![Z40x group frontier](https://github.com/andrewktan/pareto_dib/blob/main/images/Z40x.jpg)
