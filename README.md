@@ -20,7 +20,7 @@ Finally, we use our algorithm to map the DIB frontier of three different tasks: 
 
 ## Installation
 
-A stable release can be found on the Python Package Index (PyPI) and can be installed with `pip install pareto_dib`.
+Download the latest release and install by running `python setup.py install`.
 
 ## Usage
 
